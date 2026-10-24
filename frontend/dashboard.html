@@ -1,0 +1,4060 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Cloud Eats | Dashboard</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #f4fff8,
+                    #edf9f2
+                );
+
+            color: #17362a;
+
+        }
+
+
+        /* ==========================================
+           HEADER
+           ========================================== */
+
+        .ced-topbar {
+
+            background: #ffffff;
+
+            border-bottom:
+                1px solid #e2eee7;
+
+            padding:
+                18px 7%;
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+        }
+
+
+        .ced-logo {
+
+            font-size: 25px;
+
+            font-weight: 900;
+
+            letter-spacing: 1px;
+
+            color: #15764a;
+
+        }
+
+
+        .ced-logo span {
+
+            color: #263c31;
+
+        }
+
+
+        .ced-logout {
+
+            border: none;
+
+            background: #edf8f2;
+
+            color: #15764a;
+
+            padding:
+                11px 20px;
+
+            border-radius: 25px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+
+        }
+
+
+        .ced-logout:hover {
+
+            background: #15764a;
+
+            color: #ffffff;
+
+        }
+
+
+        /* ==========================================
+           MAIN
+           ========================================== */
+
+        .ced-main {
+
+            width: 88%;
+
+            max-width: 1200px;
+
+            margin:
+                42px auto 70px;
+
+        }
+
+
+        .ced-label {
+
+            color: #15764a;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 9px;
+
+        }
+
+
+        .ced-title {
+
+            font-size:
+                clamp(
+                    30px,
+                    5vw,
+                    48px
+                );
+
+            line-height: 1.1;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .ced-subtitle {
+
+            color: #6c7c74;
+
+            line-height: 1.6;
+
+            margin-bottom: 32px;
+
+        }
+
+
+        /* ==========================================
+           GRID
+           ========================================== */
+
+        .ced-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 22px;
+
+        }
+
+
+        /* ==========================================
+           CARD
+           ========================================== */
+
+        .ced-card {
+
+            background: #ffffff;
+
+            border:
+                1px solid #dfebe4;
+
+            border-radius: 24px;
+
+            padding: 28px;
+
+            box-shadow:
+                0 14px 40px
+                rgba(
+                    24,
+                    70,
+                    48,
+                    0.07
+                );
+
+        }
+
+
+        .ced-card-head {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 24px;
+
+        }
+
+
+        .ced-card-title {
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+        }
+
+
+        .ced-icon {
+
+            width: 46px;
+
+            height: 46px;
+
+            border-radius: 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #edf8f2;
+
+            font-size: 22px;
+
+        }
+
+
+        /* ==========================================
+           SUBSCRIPTION
+           ========================================== */
+
+        .ced-plan {
+
+            font-size: 29px;
+
+            font-weight: 900;
+
+            color: #15764a;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .ced-price {
+
+            font-size: 24px;
+
+            font-weight: 800;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .ced-price small {
+
+            font-size: 13px;
+
+            color: #77867e;
+
+            font-weight: 500;
+
+        }
+
+
+        .ced-status {
+
+            display: inline-block;
+
+            padding:
+                8px 14px;
+
+            border-radius: 20px;
+
+            background: #fff5d8;
+
+            color: #927000;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            text-transform: capitalize;
+
+        }
+
+
+        /* ==========================================
+           DELIVERY DAYS
+           ========================================== */
+
+        .ced-days {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+        }
+
+
+        .ced-day {
+
+            padding:
+                8px 11px;
+
+            border-radius: 11px;
+
+            background: #edf8f2;
+
+            color: #15764a;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* ==========================================
+           ADDRESS
+           ========================================== */
+
+        .ced-address-box {
+
+            color: #52635a;
+
+            line-height: 1.7;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .ced-address-actions {
+
+            display: flex;
+
+            gap: 10px;
+
+        }
+
+
+        .ced-primary-btn,
+        .ced-secondary-btn {
+
+            border: none;
+
+            padding:
+                13px 18px;
+
+            border-radius: 13px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+
+        }
+
+
+        .ced-primary-btn {
+
+            background: #15764a;
+
+            color: #ffffff;
+
+        }
+
+
+        .ced-primary-btn:hover {
+
+            background: #105d3a;
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        .ced-secondary-btn {
+
+            background: #edf8f2;
+
+            color: #15764a;
+
+        }
+
+
+        .ced-secondary-btn:hover {
+
+            background: #dff1e7;
+
+        }
+
+
+        /* ==========================================
+           ADDRESS FORM
+           ========================================== */
+
+        .ced-address-form {
+
+            display: none;
+
+            margin-top: 20px;
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid #e7eee9;
+
+        }
+
+
+        .ced-address-form.ced-show {
+
+            display: block;
+
+        }
+
+
+        .ced-form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(
+                        0,
+                        1fr
+                    )
+                );
+
+            gap: 14px;
+
+        }
+
+
+        .ced-field {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+
+        }
+
+
+        .ced-field-full {
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .ced-field label {
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            color: #43554b;
+
+        }
+
+
+        .ced-field input,
+        .ced-field select,
+        .ced-field textarea {
+
+            width: 100%;
+
+            border:
+                1px solid #d8e5dd;
+
+            border-radius: 12px;
+
+            padding:
+                13px 14px;
+
+            outline: none;
+
+            font-size: 14px;
+
+            background: #fbfefc;
+
+            color: #17362a;
+
+            font-family: inherit;
+
+        }
+
+
+        .ced-field textarea {
+
+            min-height: 100px;
+
+            resize: vertical;
+
+        }
+
+
+        .ced-field input:focus,
+        .ced-field select:focus,
+        .ced-field textarea:focus {
+
+            border-color: #15764a;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(
+                    21,
+                    118,
+                    74,
+                    0.09
+                );
+
+        }
+
+
+        .ced-form-buttons {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 17px;
+
+        }
+
+
+        .ced-save-btn {
+
+            border: none;
+
+            background: #15764a;
+
+            color: #ffffff;
+
+            padding:
+                13px 20px;
+
+            border-radius: 12px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+        }
+
+
+        .ced-cancel-btn {
+
+            border: none;
+
+            background: #edf1ee;
+
+            color: #52635a;
+
+            padding:
+                13px 20px;
+
+            border-radius: 12px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+        }
+
+
+        /* ==========================================
+           MEAL PREFERENCES
+           ========================================== */
+
+        .ced-preference-options {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .ced-choice {
+
+            position: relative;
+
+        }
+
+
+        .ced-choice input {
+
+            position: absolute;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+        }
+
+
+        .ced-choice label {
+
+            display: block;
+
+            padding:
+                12px 16px;
+
+            border:
+                1px solid #d8e5dd;
+
+            border-radius: 13px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            background: #fbfefc;
+
+            transition: 0.2s;
+
+        }
+
+
+        .ced-choice input:checked + label {
+
+            background: #15764a;
+
+            border-color: #15764a;
+
+            color: #ffffff;
+
+        }
+
+
+        .ced-meal-checks {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    1fr
+                );
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .ced-meal-check {
+
+            position: relative;
+
+        }
+
+
+        .ced-meal-check input {
+
+            position: absolute;
+
+            opacity: 0;
+
+        }
+
+
+        .ced-meal-check label {
+
+            display: block;
+
+            text-align: center;
+
+            padding:
+                14px 10px;
+
+            border:
+                1px solid #d8e5dd;
+
+            border-radius: 13px;
+
+            background: #fbfefc;
+
+            cursor: pointer;
+
+            font-weight: 700;
+
+            font-size: 13px;
+
+            transition: 0.2s;
+
+        }
+
+
+        .ced-meal-check input:checked + label {
+
+            background: #edf8f2;
+
+            border-color: #15764a;
+
+            color: #15764a;
+
+        }
+
+
+        .ced-preference-summary {
+
+            color: #52635a;
+
+            line-height: 1.7;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .ced-preference-summary strong {
+
+            color: #17362a;
+
+        }
+
+
+        .ced-preference-buttons {
+
+            display: flex;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .ced-delete-btn {
+
+            border: none;
+
+            background: #fff0f0;
+
+            color: #c0392b;
+
+            padding:
+                13px 20px;
+
+            border-radius: 12px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+        }
+
+
+
+        /* ==========================================
+           TODAY'S MEALS
+           ========================================== */
+
+        .ced-meals-card {
+            grid-column: 1 / -1;
+        }
+
+        .ced-meal-card {
+            border: 1px solid #d8e5dd;
+            border-radius: 16px;
+            padding: 14px;
+            background: #ffffff;
+        }
+
+        .ced-meal-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 14px;
+            display: block;
+        }
+
+        .ced-meal-no-image {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5f3;
+            border-radius: 14px;
+            color: #7b8981;
+            font-weight: 700;
+        }
+
+        .ced-meal-details {
+            padding-top: 14px;
+        }
+
+        .ced-meal-details h3 {
+            margin: 0 0 8px 0;
+            font-size: 20px;
+        }
+
+        .ced-meal-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .ced-meal-tag {
+            padding: 5px 9px;
+            border-radius: 20px;
+            background: #eef7f1;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .ced-meal-description {
+            margin: 0 0 12px 0;
+            color: #66736c;
+            line-height: 1.5;
+        }
+
+        .ced-meal-price {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 14px;
+        }
+
+        .ced-meal-select-btn {
+            width: 100%;
+        }
+
+        .ced-meals-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        /* ==========================================
+           HEALTH CARD
+           ========================================== */
+
+        .ced-health {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #15764a,
+                    #279866
+                );
+
+            color: #ffffff;
+
+            border: none;
+
+        }
+
+
+        .ced-health .ced-label {
+
+            color: #d9ffea;
+
+        }
+
+
+        .ced-health h2 {
+
+            font-size: 27px;
+
+            line-height: 1.25;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .ced-health p {
+
+            color: #e7fff1;
+
+            line-height: 1.7;
+
+            font-size: 15px;
+
+        }
+
+
+        /* ==========================================
+           MESSAGE
+           ========================================== */
+
+        .ced-message {
+
+            position: fixed;
+
+            left: 50%;
+
+            bottom: 25px;
+
+            transform:
+                translate(
+                    -50%,
+                    20px
+                );
+
+            background: #17362a;
+
+            color: #ffffff;
+
+            padding:
+                13px 20px;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition: 0.3s;
+
+            z-index: 1000;
+
+        }
+
+
+        .ced-message.ced-message-show {
+
+            opacity: 1;
+
+            transform:
+                translate(
+                    -50%,
+                    0
+                );
+
+        }
+
+
+        /* ==========================================
+           LOADING
+           ========================================== */
+
+        .ced-loading {
+
+            position: fixed;
+
+            inset: 0;
+
+            background: #f4fff8;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            z-index: 900;
+
+        }
+
+
+        .ced-spinner {
+
+            width: 42px;
+
+            height: 42px;
+
+            border:
+                4px solid #dceee4;
+
+            border-top-color:
+                #15764a;
+
+            border-radius: 50%;
+
+            animation:
+                cedRotate
+                0.8s
+                linear
+                infinite;
+
+        }
+
+
+        @keyframes cedRotate {
+
+            to {
+
+                transform:
+                    rotate(360deg);
+
+            }
+
+        }
+
+
+        /* ==========================================
+           RESPONSIVE
+           ========================================== */
+
+        @media (
+            max-width: 800px
+        ) {
+
+            .ced-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .ced-main {
+
+                width: 92%;
+
+                margin-top: 30px;
+
+            }
+
+        }
+
+
+        @media (
+            max-width: 520px
+        ) {
+
+            .ced-topbar {
+
+                padding:
+                    15px 4%;
+
+            }
+
+
+            .ced-logo {
+
+                font-size: 21px;
+
+            }
+
+
+            .ced-card {
+
+                padding: 21px;
+
+                border-radius: 19px;
+
+            }
+
+
+            .ced-form-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .ced-field-full {
+
+                grid-column: auto;
+
+            }
+
+
+            .ced-address-actions,
+            .ced-form-buttons,
+            .ced-preference-buttons {
+
+                flex-direction: column;
+
+            }
+
+
+            .ced-primary-btn,
+            .ced-secondary-btn,
+            .ced-save-btn,
+            .ced-cancel-btn,
+            .ced-delete-btn {
+
+                width: 100%;
+
+            }
+
+
+            .ced-meal-checks {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         LOADING
+         ========================================== -->
+
+    <div
+        class="ced-loading"
+        id="cedLoading"
+    >
+
+        <div class="ced-spinner"></div>
+
+    </div>
+
+
+    <!-- ==========================================
+         HEADER
+         ========================================== -->
+
+    <header class="ced-topbar">
+
+        <div class="ced-logo">
+
+            CLOUD
+            <span>EATS</span>
+
+        </div>
+
+
+        <button
+            class="ced-logout"
+            type="button"
+            onclick="cedLogoutCustomer()"
+        >
+
+            Logout
+
+        </button>
+
+    </header>
+
+
+    <!-- ==========================================
+         MAIN
+         ========================================== -->
+
+    <main class="ced-main">
+
+
+        <div class="ced-label">
+
+            CUSTOMER DASHBOARD
+
+        </div>
+
+
+        <h1
+            class="ced-title"
+            id="cedWelcome"
+        >
+
+            Welcome back 👋
+
+        </h1>
+
+
+        <p class="ced-subtitle">
+
+            Manage your meals, delivery schedule
+            and address from one place.
+
+        </p>
+
+
+        <section class="ced-grid">
+
+
+            <!-- ======================================
+                 SUBSCRIPTION
+                 ====================================== -->
+
+            <article class="ced-card">
+
+                <div class="ced-card-head">
+
+                    <h2 class="ced-card-title">
+                        Your Subscription
+                    </h2>
+
+                    <div class="ced-icon">
+                        🍱
+                    </div>
+
+                </div>
+
+                <div id="cedSubscriptionContent">
+
+                    <div style="
+                        padding: 10px 0;
+                    ">
+
+                        <p style="
+                            margin: 0 0 18px 0;
+                            color: #5d6b63;
+                            line-height: 1.6;
+                        ">
+                            Choose the Cloud Eats meal plan that suits you.
+                        </p>
+
+                        <div style="
+                            display: grid;
+                            grid-template-columns: repeat(
+                                auto-fit,
+                                minmax(220px, 1fr)
+                            );
+                            gap: 16px;
+                            margin-bottom: 20px;
+                        ">
+
+                            <!-- 2 MEALS PLAN -->
+
+                            <div style="
+                                border: 1px solid #d8e5dd;
+                                border-radius: 16px;
+                                padding: 20px;
+                                background: #fbfefc;
+                            ">
+
+                                <div style="
+                                    font-size: 18px;
+                                    font-weight: 800;
+                                    margin-bottom: 8px;
+                                ">
+                                    🍱 2 Meals / Day
+                                </div>
+
+                                <p style="
+                                    margin: 0 0 14px 0;
+                                    color: #68766e;
+                                ">
+                                    Breakfast + Lunch or Dinner
+                                </p>
+
+                                <button
+                                    type="button"
+                                    onclick="cedChoosePlan('2 Meals / Day')"
+                                    style="
+                                        width: 100%;
+                                        padding: 12px 16px;
+                                        border: none;
+                                        border-radius: 12px;
+                                        background: #15764a;
+                                        color: white;
+                                        font-size: 14px;
+                                        font-weight: 700;
+                                        cursor: pointer;
+                                    "
+                                >
+                                    Choose 2 Meals
+                                </button>
+
+                            </div>
+
+
+                            <!-- 3 MEALS PLAN -->
+
+                            <div style="
+                                border: 1px solid #d8e5dd;
+                                border-radius: 16px;
+                                padding: 20px;
+                                background: #fbfefc;
+                            ">
+
+                                <div style="
+                                    font-size: 18px;
+                                    font-weight: 800;
+                                    margin-bottom: 8px;
+                                ">
+                                    🍱 3 Meals / Day
+                                </div>
+
+                                <p style="
+                                    margin: 0 0 14px 0;
+                                    color: #68766e;
+                                ">
+                                    Breakfast + Lunch + Dinner
+                                </p>
+
+                                <button
+                                    type="button"
+                                    onclick="cedChoosePlan('3 Meals / Day')"
+                                    style="
+                                        width: 100%;
+                                        padding: 12px 16px;
+                                        border: none;
+                                        border-radius: 12px;
+                                        background: #15764a;
+                                        color: white;
+                                        font-size: 14px;
+                                        font-weight: 700;
+                                        cursor: pointer;
+                                    "
+                                >
+                                    Choose 3 Meals
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <div
+                            id="cedSubscriptionMessage"
+                            style="
+                                margin-top: 10px;
+                                font-weight: 700;
+                            "
+                        ></div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- ======================================
+                 DELIVERY
+                 ====================================== -->
+
+            <article class="ced-card">
+
+                <div class="ced-card-head">
+
+                    <h2 class="ced-card-title">
+
+                        Delivery Schedule
+
+                    </h2>
+
+
+                    <div class="ced-icon">
+
+                        🚚
+
+                    </div>
+
+                </div>
+
+
+                <div id="cedDeliveryContent">
+
+                    Loading delivery schedule...
+
+                </div>
+
+            </article>
+
+
+            <!-- ======================================
+                 MEAL PREFERENCES
+                 ====================================== -->
+
+            <article class="ced-card">
+
+                <div class="ced-card-head">
+
+                    <h2 class="ced-card-title">
+
+                        Meal Preferences
+
+                    </h2>
+
+
+                    <div class="ced-icon">
+
+                        🍽️
+
+                    </div>
+
+                </div>
+
+
+                <div
+                    id="cedMealPreferencesContent"
+                >
+
+                    Loading meal preferences...
+
+                </div>
+
+
+                <!-- MEAL PREFERENCES FORM -->
+
+                <form
+                    class="ced-address-form"
+                    id="cedMealPreferencesForm"
+                >
+
+                    <!-- FOOD PREFERENCE -->
+
+                    <div class="ced-field">
+
+                        <label>
+
+                            Food Preference *
+
+                        </label>
+
+
+                        <div
+                            class="ced-preference-options"
+                        >
+
+                            <div class="ced-choice">
+
+                                <input
+                                    type="radio"
+                                    name="cedFoodPreference"
+                                    id="cedVegetarian"
+                                    value="Vegetarian"
+                                    required
+                                >
+
+                                <label
+                                    for="cedVegetarian"
+                                >
+
+                                    🥗 Vegetarian
+
+                                </label>
+
+                            </div>
+
+
+                            <div class="ced-choice">
+
+                                <input
+                                    type="radio"
+                                    name="cedFoodPreference"
+                                    id="cedNonVegetarian"
+                                    value="Non-Vegetarian"
+                                >
+
+                                <label
+                                    for="cedNonVegetarian"
+                                >
+
+                                    🍗 Non-Vegetarian
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MEALS -->
+
+                    <div class="ced-field">
+
+                        <label>
+
+                            Meals *
+
+                        </label>
+
+
+                        <div
+                            class="ced-meal-checks"
+                        >
+
+                            <div
+                                class="ced-meal-check"
+                            >
+
+                                <input
+                                    type="checkbox"
+                                    id="cedBreakfast"
+                                >
+
+                                <label
+                                    for="cedBreakfast"
+                                >
+
+                                    ☀️ Breakfast
+
+                                </label>
+
+                            </div>
+
+
+                            <div
+                                class="ced-meal-check"
+                            >
+
+                                <input
+                                    type="checkbox"
+                                    id="cedLunch"
+                                >
+
+                                <label
+                                    for="cedLunch"
+                                >
+
+                                    🍛 Lunch
+
+                                </label>
+
+                            </div>
+
+
+                            <div
+                                class="ced-meal-check"
+                            >
+
+                                <input
+                                    type="checkbox"
+                                    id="cedDinner"
+                                >
+
+                                <label
+                                    for="cedDinner"
+                                >
+
+                                    🌙 Dinner
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ALLERGIES -->
+
+                    <div class="ced-field">
+
+                        <label
+                            for="cedAllergies"
+                        >
+
+                            Food Allergies
+
+                        </label>
+
+
+                        <textarea
+                            id="cedAllergies"
+                            maxlength="500"
+                            placeholder="Example: peanuts, dairy..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- SPECIAL INSTRUCTIONS -->
+
+                    <div class="ced-field">
+
+                        <label
+                            for="cedSpecialInstructions"
+                        >
+
+                            Special Instructions
+
+                        </label>
+
+
+                        <textarea
+                            id="cedSpecialInstructions"
+                            maxlength="500"
+                            placeholder="Any special instructions for your meals..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="ced-form-buttons">
+
+                        <button
+                            class="ced-save-btn"
+                            type="submit"
+                            id="cedSavePreferencesButton"
+                        >
+
+                            Save Preferences
+
+                        </button>
+
+
+                        <button
+                            class="ced-cancel-btn"
+                            type="button"
+                            onclick="cedCloseMealPreferencesForm()"
+                        >
+
+                            Cancel
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </article>
+
+
+            <!-- ======================================
+                 ADDRESS
+                 ====================================== -->
+
+            <article class="ced-card">
+
+                <div class="ced-card-head">
+
+                    <h2 class="ced-card-title">
+
+                        Delivery Address
+
+                    </h2>
+
+
+                    <div class="ced-icon">
+
+                        📍
+
+                    </div>
+
+                </div>
+
+
+                <div id="cedAddressContent">
+
+                    <div class="ced-address-box">
+
+                        Checking your saved address...
+
+                    </div>
+
+                </div>
+
+
+                <!-- ADDRESS FORM -->
+
+                <form
+                    class="ced-address-form"
+                    id="cedAddressForm"
+                >
+
+                    <div class="ced-form-grid">
+
+
+                        <div class="ced-field">
+
+                            <label
+                                for="cedHouseNumber"
+                            >
+
+                                House / Flat Number *
+
+                            </label>
+
+
+                            <input
+                                id="cedHouseNumber"
+                                type="text"
+                                placeholder="Example: 12-4-56"
+                                maxlength="100"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="ced-field">
+
+                            <label
+                                for="cedStreet"
+                            >
+
+                                Street *
+
+                            </label>
+
+
+                            <input
+                                id="cedStreet"
+                                type="text"
+                                placeholder="Street name"
+                                maxlength="200"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div
+                            class="ced-field ced-field-full"
+                        >
+
+                            <label
+                                for="cedArea"
+                            >
+
+                                Area / Locality *
+
+                            </label>
+
+
+                            <input
+                                id="cedArea"
+                                type="text"
+                                placeholder="Area or locality"
+                                maxlength="200"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="ced-field">
+
+                            <label
+                                for="cedCity"
+                            >
+
+                                City *
+
+                            </label>
+
+
+                            <input
+                                id="cedCity"
+                                type="text"
+                                placeholder="City"
+                                maxlength="100"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="ced-field">
+
+                            <label
+                                for="cedState"
+                            >
+
+                                State *
+
+                            </label>
+
+
+                            <input
+                                id="cedState"
+                                type="text"
+                                placeholder="State"
+                                maxlength="100"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="ced-field">
+
+                            <label
+                                for="cedPincode"
+                            >
+
+                                Pincode *
+
+                            </label>
+
+
+                            <input
+                                id="cedPincode"
+                                type="text"
+                                inputmode="numeric"
+                                placeholder="6-digit pincode"
+                                maxlength="6"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="ced-field">
+
+                            <label
+                                for="cedAddressType"
+                            >
+
+                                Address Type
+
+                            </label>
+
+
+                            <select
+                                id="cedAddressType"
+                            >
+
+                                <option value="Home">
+                                    Home
+                                </option>
+
+                                <option value="Work">
+                                    Work
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div
+                            class="ced-field ced-field-full"
+                        >
+
+                            <label
+                                for="cedLandmark"
+                            >
+
+                                Landmark
+
+                            </label>
+
+
+                            <input
+                                id="cedLandmark"
+                                type="text"
+                                placeholder="Nearby landmark (optional)"
+                                maxlength="200"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="ced-form-buttons">
+
+                        <button
+                            class="ced-save-btn"
+                            type="submit"
+                            id="cedSaveAddressButton"
+                        >
+
+                            Save Address
+
+                        </button>
+
+
+                        <button
+                            class="ced-cancel-btn"
+                            type="button"
+                            onclick="cedCloseAddressForm()"
+                        >
+
+                            Cancel
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </article>
+
+
+
+
+            <!-- ======================================
+                 TODAY'S MEALS
+                 ====================================== -->
+
+            <article class="ced-card ced-meals-card">
+
+                <div class="ced-card-head">
+
+                    <h2 class="ced-card-title">
+                        Today's Meals
+                    </h2>
+
+                    <button
+                        type="button"
+                        class="ced-secondary-btn"
+                        onclick="cedLoadMeals()"
+                    >
+                        Refresh
+                    </button>
+
+                </div>
+
+                <div id="cedMealsContent">
+                    Loading today's meals...
+                </div>
+
+            </article>
+
+            <!-- ======================================
+                 CLOUD EATS PROMISE
+                 ====================================== -->
+
+            <article
+                class="ced-card ced-health"
+            >
+
+                <div class="ced-label">
+
+                    CLOUD EATS PROMISE
+
+                </div>
+
+
+                <h2>
+
+                    Fresh food.
+                    Better everyday.
+
+                </h2>
+
+
+                <p>
+
+                    Your meals are prepared by
+                    Cloud Kitchens and delivered
+                    safely in reusable steel
+                    containers.
+
+                    <br><br>
+
+                    No unnecessary preservatives
+                    and no plastic food containers.
+
+                </p>
+
+            </article>
+
+
+        </section>
+
+    </main>
+
+
+    <!-- ==========================================
+         MESSAGE
+         ========================================== -->
+
+    <div
+        class="ced-message"
+        id="cedMessage"
+    ></div>
+
+
+    <script>
+
+
+        // ==================================================
+        // API
+        // ==================================================
+
+        const cedApiUrl =
+            "http://localhost:5000/api";
+
+
+        // ==================================================
+        // MESSAGE
+        // ==================================================
+
+        function cedShowMessage(message) {
+
+            const messageBox =
+                document.getElementById(
+                    "cedMessage"
+                );
+
+
+            messageBox.textContent =
+                message;
+
+
+            messageBox.classList.add(
+                "ced-message-show"
+            );
+
+
+            clearTimeout(
+                window.cedMessageTimer
+            );
+
+
+            window.cedMessageTimer =
+                setTimeout(function () {
+
+                    messageBox.classList.remove(
+                        "ced-message-show"
+                    );
+
+                }, 3000);
+
+        }
+
+
+        // ==================================================
+        // LOAD CUSTOMER
+        // ==================================================
+
+        function cedLoadCustomer() {
+
+            const customerData =
+                localStorage.getItem(
+                    "cexCustomer"
+                );
+
+
+            if (!customerData) {
+
+                return;
+
+            }
+
+
+            try {
+
+                const customer =
+                    JSON.parse(
+                        customerData
+                    );
+
+
+                if (customer.name) {
+
+                    document.getElementById(
+                        "cedWelcome"
+                    ).textContent =
+                        "Welcome back, " +
+                        customer.name +
+                        " 👋";
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Customer data error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+
+
+        // ==================================================
+        // LOAD TODAY'S MEALS
+        // ==================================================
+
+        async function cedLoadMeals() {
+
+            const container =
+                document.getElementById(
+                    "cedMealsContent"
+                );
+
+            if (!container) {
+                console.error(
+                    "cedMealsContent not found."
+                );
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="ced-preference-summary">
+                    Loading today's meals...
+                </div>
+            `;
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${cedApiUrl}/meals`
+                    );
+
+                const data =
+                    await response.json();
+
+                console.log(
+                    "Meals API response:",
+                    data
+                );
+
+                if (!response.ok) {
+                    throw new Error(
+                        data.message ||
+                        "Unable to load meals."
+                    );
+                }
+
+                const meals =
+                    Array.isArray(data.meals)
+                        ? data.meals
+                        : Array.isArray(data.data)
+                            ? data.data
+                            : Array.isArray(data)
+                                ? data
+                                : [];
+
+                if (meals.length === 0) {
+                    container.innerHTML = `
+                        <div class="ced-preference-summary">
+                            No meals are available today.
+                        </div>
+                    `;
+                    return;
+                }
+
+                let mealsHTML = "";
+
+                meals.forEach(function (meal) {
+
+                    const price =
+                        Number(meal.price || 0).toLocaleString(
+                            "en-IN"
+                        );
+
+                    const imageHTML =
+                        meal.image
+                            ? `
+                                <img
+                                    class="ced-meal-image"
+                                    src="${meal.image}"
+                                    alt="${meal.name || "Meal"}"
+                                >
+                              `
+                            : `
+                                <div class="ced-meal-no-image">
+                                    🍽️ No image
+                                </div>
+                              `;
+
+                    mealsHTML += `
+                        <div class="ced-meal-card">
+
+                            ${imageHTML}
+
+                            <div class="ced-meal-details">
+
+                                <h3>
+                                    ${meal.name || "Unnamed Meal"}
+                                </h3>
+
+                                <div class="ced-meal-tags">
+
+                                    ${
+                                        meal.mealType
+                                            ? `
+                                                <span class="ced-meal-tag">
+                                                    ${meal.mealType}
+                                                </span>
+                                              `
+                                            : ""
+                                    }
+
+                                    ${
+                                        meal.foodType
+                                            ? `
+                                                <span class="ced-meal-tag">
+                                                    ${meal.foodType}
+                                                </span>
+                                              `
+                                            : ""
+                                    }
+
+                                </div>
+
+                                ${
+                                    meal.description
+                                        ? `
+                                            <p class="ced-meal-description">
+                                                ${meal.description}
+                                            </p>
+                                          `
+                                        : ""
+                                }
+
+                                <div class="ced-meal-price">
+                                    ₹${price}
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="ced-primary-btn ced-meal-select-btn"
+                                    onclick='cedSelectMeal(${JSON.stringify(meal)})'
+                                >
+                                    Select Meal
+                                </button>
+
+                            </div>
+
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = `
+                    <div class="ced-meals-grid">
+                        ${mealsHTML}
+                    </div>
+                `;
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Meals loading error:",
+                    error
+                );
+
+                container.innerHTML = `
+                    <div class="ced-preference-summary">
+                        Unable to load today's meals.
+                    </div>
+
+                    <button
+                        type="button"
+                        class="ced-primary-btn"
+                        onclick="cedLoadMeals()"
+                    >
+                        Try Again
+                    </button>
+                `;
+            }
+        }
+
+
+        // ==================================================
+        // SELECT MEAL
+        // ==================================================
+
+        function cedSelectMeal(meal) {
+
+            console.log(
+                "Selected meal:",
+                meal
+            );
+
+            localStorage.setItem(
+                "cexSelectedMeal",
+                JSON.stringify(meal)
+            );
+
+            cedShowMessage(
+                `${meal.name || "Meal"} selected.`
+            );
+        }
+
+
+        // ==================================================
+        // LOAD SUBSCRIPTION
+        // ==================================================
+
+        async function cedLoadSubscription() {
+
+            const token =
+                localStorage.getItem(
+                    "cexAuthToken"
+                );
+
+
+            if (!token) {
+
+                window.location.href =
+                    "index.html";
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${cedApiUrl}/subscriptions/my-subscription`,
+                        {
+
+                            method: "GET",
+
+                            headers: {
+
+                                "Authorization":
+                                    `Bearer ${token}`
+
+                            }
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load subscription."
+                    );
+
+                }
+
+
+                localStorage.setItem(
+                    "cexSubscription",
+                    JSON.stringify(
+                        data.subscription
+                    )
+                );
+
+
+                cedDisplaySubscription(
+                    data.subscription
+                );
+
+
+                cedDisplayDelivery(
+                    data.subscription
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Subscription error:",
+                    error
+                );
+
+
+                document.getElementById(
+                    "cedSubscriptionContent"
+                ).innerHTML = `
+                    <p>
+                        Unable to load subscription.
+                    </p>
+                `;
+
+            }
+
+        }
+
+
+        // ==================================================
+        // DISPLAY SUBSCRIPTION
+        // ==================================================
+
+        function cedDisplaySubscription(
+            subscription
+        ) {
+
+            const container =
+                document.getElementById(
+                    "cedSubscriptionContent"
+                );
+
+            if (!container) {
+                return;
+            }
+
+            if (!subscription) {
+                container.innerHTML = `
+                    <p>No active subscription found.</p>
+                    <button
+                        type="button"
+                        class="ced-primary-btn"
+                        onclick="cedChoosePlan('2 Meals / Day')"
+                    >
+                        Choose a Plan
+                    </button>
+                `;
+                return;
+            }
+
+            const price =
+                Number(
+                    subscription.price
+                ).toLocaleString(
+                    "en-IN"
+                );
+
+            container.innerHTML = `
+
+                <div class="ced-plan">
+
+                    ${subscription.plan}
+
+                </div>
+
+                <div class="ced-price">
+
+                    ₹${price}
+
+                    <small>
+                        / month
+                    </small>
+
+                </div>
+
+                <div
+                    style="
+                        margin-bottom:14px;
+                    "
+                >
+
+                    <strong>
+
+                        ${subscription.mealsPerDay}
+                        meals per day
+
+                    </strong>
+
+                </div>
+
+                <span class="ced-status">
+
+                    ${subscription.status}
+
+                </span>
+
+            `;
+
+        }
+
+
+        // ==================================================
+        // DISPLAY DELIVERY
+        // ==================================================
+
+        function cedDisplayDelivery(
+            subscription
+        ) {
+
+            const container =
+                document.getElementById(
+                    "cedDeliveryContent"
+                );
+
+
+            const days =
+                subscription.deliveryDays ||
+                [];
+
+
+            let daysHTML = "";
+
+
+            days.forEach(
+                function (day) {
+
+                    daysHTML += `
+
+                        <span class="ced-day">
+
+                            ${day}
+
+                        </span>
+
+                    `;
+
+                }
+            );
+
+
+            container.innerHTML = `
+
+                <div
+                    style="
+                        margin-bottom:18px;
+                    "
+                >
+
+                    <strong>
+
+                        ${subscription.mealsPerDay}
+                        meals every delivery day
+
+                    </strong>
+
+                </div>
+
+
+                <div class="ced-days">
+
+                    ${daysHTML}
+
+                </div>
+
+            `;
+
+        }
+
+
+        // ==================================================
+        // MEAL PREFERENCES
+        // ==================================================
+
+        async function cedLoadMealPreferences() {
+
+            const token =
+                localStorage.getItem(
+                    "cexAuthToken"
+                );
+
+
+            if (!token) {
+
+                window.location.href =
+                    "index.html";
+
+                return;
+
+            }
+
+
+            const container =
+                document.getElementById(
+                    "cedMealPreferencesContent"
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${cedApiUrl}/meal-preferences/my-preferences`,
+                        {
+
+                            method: "GET",
+
+                            headers: {
+
+                                "Authorization":
+                                    `Bearer ${token}`
+
+                            }
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                // ==========================================
+                // NO PREFERENCES YET
+                // ==========================================
+
+                if (response.status === 404) {
+
+                    container.innerHTML = `
+
+                        <div class="ced-preference-summary">
+
+                            You haven't saved your meal
+                            preferences yet.
+
+                        </div>
+
+
+                        <button
+                            class="ced-primary-btn"
+                            type="button"
+                            onclick="cedOpenMealPreferencesForm()"
+                        >
+
+                            + Add Meal Preferences
+
+                        </button>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load meal preferences."
+                    );
+
+                }
+
+
+                cedDisplayMealPreferences(
+                    data.preferences
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Meal preferences loading error:",
+                    error
+                );
+
+
+                container.innerHTML = `
+
+                    <div class="ced-preference-summary">
+
+                        Unable to load meal preferences.
+
+                    </div>
+
+
+                    <button
+                        class="ced-primary-btn"
+                        type="button"
+                        onclick="cedLoadMealPreferences()"
+                    >
+
+                        Try Again
+
+                    </button>
+
+                `;
+
+            }
+
+        }
+
+
+        // ==================================================
+        // DISPLAY MEAL PREFERENCES
+        // ==================================================
+
+        function cedDisplayMealPreferences(
+            preferences
+        ) {
+
+            const container =
+                document.getElementById(
+                    "cedMealPreferencesContent"
+                );
+
+
+            const meals = [];
+
+
+            if (preferences.breakfast) {
+
+                meals.push("Breakfast");
+
+            }
+
+
+            if (preferences.lunch) {
+
+                meals.push("Lunch");
+
+            }
+
+
+            if (preferences.dinner) {
+
+                meals.push("Dinner");
+
+            }
+
+
+            container.innerHTML = `
+
+                <div class="ced-preference-summary">
+
+                    <div>
+
+                        <strong>
+                            Food:
+                        </strong>
+
+                        ${preferences.foodPreference}
+
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            Meals:
+                        </strong>
+
+                        ${meals.join(", ")}
+
+                    </div>
+
+
+                    ${
+                        preferences.allergies
+                        ?
+                        `
+                        <div>
+                            <strong>
+                                Allergies:
+                            </strong>
+
+                            ${preferences.allergies}
+                        </div>
+                        `
+                        :
+                        ""
+                    }
+
+
+                    ${
+                        preferences.specialInstructions
+                        ?
+                        `
+                        <div>
+                            <strong>
+                                Instructions:
+                            </strong>
+
+                            ${preferences.specialInstructions}
+                        </div>
+                        `
+                        :
+                        ""
+                    }
+
+                </div>
+
+
+                <div class="ced-preference-buttons">
+
+                    <button
+                        class="ced-primary-btn"
+                        type="button"
+                        onclick='cedEditMealPreferences(${JSON.stringify(preferences)})'
+                    >
+
+                        Edit Preferences
+
+                    </button>
+
+
+                    <button
+                        class="ced-delete-btn"
+                        type="button"
+                        onclick="cedDeleteMealPreferences()"
+                    >
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+            `;
+
+        }
+
+
+        // ==================================================
+        // OPEN MEAL PREFERENCES FORM
+        // ==================================================
+
+        function cedOpenMealPreferencesForm() {
+
+            const form =
+                document.getElementById(
+                    "cedMealPreferencesForm"
+                );
+
+
+            form.classList.add(
+                "ced-show"
+            );
+
+        }
+
+
+        // ==================================================
+        // CLOSE MEAL PREFERENCES FORM
+        // ==================================================
+
+        function cedCloseMealPreferencesForm() {
+
+            const form =
+                document.getElementById(
+                    "cedMealPreferencesForm"
+                );
+
+
+            form.classList.remove(
+                "ced-show"
+            );
+
+        }
+
+
+        // ==================================================
+        // EDIT MEAL PREFERENCES
+        // ==================================================
+
+        function cedEditMealPreferences(
+            preferences
+        ) {
+
+            document.getElementById(
+                "cedMealPreferencesForm"
+            ).classList.add(
+                "ced-show"
+            );
+
+
+            document.getElementById(
+                "cedVegetarian"
+            ).checked =
+                preferences.foodPreference ===
+                "Vegetarian";
+
+
+            document.getElementById(
+                "cedNonVegetarian"
+            ).checked =
+                preferences.foodPreference ===
+                "Non-Vegetarian";
+
+
+            document.getElementById(
+                "cedBreakfast"
+            ).checked =
+                Boolean(
+                    preferences.breakfast
+                );
+
+
+            document.getElementById(
+                "cedLunch"
+            ).checked =
+                Boolean(
+                    preferences.lunch
+                );
+
+
+            document.getElementById(
+                "cedDinner"
+            ).checked =
+                Boolean(
+                    preferences.dinner
+                );
+
+
+            document.getElementById(
+                "cedAllergies"
+            ).value =
+                preferences.allergies ||
+                "";
+
+
+            document.getElementById(
+                "cedSpecialInstructions"
+            ).value =
+                preferences.specialInstructions ||
+                "";
+
+        }
+
+
+        // ==================================================
+        // SAVE MEAL PREFERENCES
+        // ==================================================
+
+        document
+            .getElementById(
+                "cedMealPreferencesForm"
+            )
+            .addEventListener(
+                "submit",
+                async function (event) {
+
+                    event.preventDefault();
+
+
+                    const token =
+                        localStorage.getItem(
+                            "cexAuthToken"
+                        );
+
+
+                    if (!token) {
+
+                        window.location.href =
+                            "index.html";
+
+                        return;
+
+                    }
+
+
+                    const vegetarian =
+                        document.getElementById(
+                            "cedVegetarian"
+                        ).checked;
+
+
+                    const nonVegetarian =
+                        document.getElementById(
+                            "cedNonVegetarian"
+                        ).checked;
+
+
+                    const breakfast =
+                        document.getElementById(
+                            "cedBreakfast"
+                        ).checked;
+
+
+                    const lunch =
+                        document.getElementById(
+                            "cedLunch"
+                        ).checked;
+
+
+                    const dinner =
+                        document.getElementById(
+                            "cedDinner"
+                        ).checked;
+
+
+                    const allergies =
+                        document.getElementById(
+                            "cedAllergies"
+                        ).value.trim();
+
+
+                    const specialInstructions =
+                        document.getElementById(
+                            "cedSpecialInstructions"
+                        ).value.trim();
+
+
+                    // ======================================
+                    // FOOD VALIDATION
+                    // ======================================
+
+                    if (
+                        !vegetarian &&
+                        !nonVegetarian
+                    ) {
+
+                        cedShowMessage(
+                            "Please select your food preference."
+                        );
+
+                        return;
+
+                    }
+
+
+                    // ======================================
+                    // MEAL VALIDATION
+                    // ======================================
+
+                    if (
+                        !breakfast &&
+                        !lunch &&
+                        !dinner
+                    ) {
+
+                        cedShowMessage(
+                            "Please select at least one meal."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const foodPreference =
+                        vegetarian
+                            ? "Vegetarian"
+                            : "Non-Vegetarian";
+
+
+                    const saveButton =
+                        document.getElementById(
+                            "cedSavePreferencesButton"
+                        );
+
+
+                    try {
+
+                        saveButton.disabled =
+                            true;
+
+
+                        saveButton.textContent =
+                            "Saving...";
+
+
+                        const response =
+                            await fetch(
+                                `${cedApiUrl}/meal-preferences/save`,
+                                {
+
+                                    method: "POST",
+
+                                    headers: {
+
+                                        "Content-Type":
+                                            "application/json",
+
+                                        "Authorization":
+                                            `Bearer ${token}`
+
+                                    },
+
+                                    body:
+                                        JSON.stringify({
+
+                                            foodPreference:
+                                                foodPreference,
+
+                                            breakfast:
+                                                breakfast,
+
+                                            lunch:
+                                                lunch,
+
+                                            dinner:
+                                                dinner,
+
+                                            allergies:
+                                                allergies,
+
+                                            specialInstructions:
+                                                specialInstructions
+
+                                        })
+
+                                }
+                            );
+
+
+                        const data =
+                            await response.json();
+
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                data.message ||
+                                "Unable to save meal preferences."
+                            );
+
+                        }
+
+
+                        cedShowMessage(
+                            "Meal preferences saved successfully!"
+                        );
+
+
+                        cedCloseMealPreferencesForm();
+
+
+                        await cedLoadMealPreferences();
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            "Meal preferences save error:",
+                            error
+                        );
+
+
+                        cedShowMessage(
+                            error.message ||
+                            "Unable to save meal preferences."
+                        );
+
+                    }
+
+                    finally {
+
+                        saveButton.disabled =
+                            false;
+
+                        saveButton.textContent =
+                            "Save Preferences";
+
+                    }
+
+                }
+            );
+
+
+        // ==================================================
+        // DELETE MEAL PREFERENCES
+        // ==================================================
+
+        async function cedDeleteMealPreferences() {
+
+            const confirmed =
+                confirm(
+                    "Are you sure you want to delete your meal preferences?"
+                );
+
+
+            if (!confirmed) {
+
+                return;
+
+            }
+
+
+            const token =
+                localStorage.getItem(
+                    "cexAuthToken"
+                );
+
+
+            if (!token) {
+
+                window.location.href =
+                    "index.html";
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${cedApiUrl}/meal-preferences/delete`,
+                        {
+
+                            method: "DELETE",
+
+                            headers: {
+
+                                "Authorization":
+                                    `Bearer ${token}`
+
+                            }
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to delete meal preferences."
+                    );
+
+                }
+
+
+                cedShowMessage(
+                    "Meal preferences deleted successfully."
+                );
+
+
+                await cedLoadMealPreferences();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Meal preferences delete error:",
+                    error
+                );
+
+
+                cedShowMessage(
+                    error.message ||
+                    "Unable to delete meal preferences."
+                );
+
+            }
+
+        }
+
+
+        // ==================================================
+        // ADDRESS FUNCTIONS
+        // ==================================================
+
+        function cedOpenAddressForm() {
+
+            document
+                .getElementById(
+                    "cedAddressForm"
+                )
+                .classList.add(
+                    "ced-show"
+                );
+
+        }
+
+
+        function cedCloseAddressForm() {
+
+            document
+                .getElementById(
+                    "cedAddressForm"
+                )
+                .classList.remove(
+                    "ced-show"
+                );
+
+        }
+
+
+        // ==================================================
+        // LOAD ADDRESS
+        // ==================================================
+
+        async function cedLoadAddress() {
+
+            const token =
+                localStorage.getItem(
+                    "cexAuthToken"
+                );
+
+
+            if (!token) {
+
+                return;
+
+            }
+
+
+            const addressContainer =
+                document.getElementById(
+                    "cedAddressContent"
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${cedApiUrl}/addresses/my-address`,
+                        {
+
+                            method: "GET",
+
+                            headers: {
+
+                                "Authorization":
+                                    `Bearer ${token}`
+
+                            }
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (
+                    response.status === 404
+                ) {
+
+                    addressContainer.innerHTML = `
+
+                        <div class="ced-address-box">
+
+                            You haven't added a delivery
+                            address yet.
+
+                        </div>
+
+
+                        <div class="ced-address-actions">
+
+                            <button
+                                class="ced-primary-btn"
+                                type="button"
+                                onclick="cedOpenAddressForm()"
+                            >
+
+                                + Add Delivery Address
+
+                            </button>
+
+                        </div>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load address."
+                    );
+
+                }
+
+
+                cedDisplayAddress(
+                    data.address
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Address loading error:",
+                    error
+                );
+
+
+                addressContainer.innerHTML = `
+
+                    <div class="ced-address-box">
+
+                        Unable to load your address.
+
+                    </div>
+
+
+                    <button
+                        class="ced-primary-btn"
+                        type="button"
+                        onclick="cedLoadAddress()"
+                    >
+
+                        Try Again
+
+                    </button>
+
+                `;
+
+            }
+
+        }
+
+
+        // ==================================================
+        // DISPLAY ADDRESS
+        // ==================================================
+
+        function cedDisplayAddress(
+            address
+        ) {
+
+            const container =
+                document.getElementById(
+                    "cedAddressContent"
+                );
+
+
+            const completeAddress = [
+
+                address.houseNumber,
+
+                address.street,
+
+                address.area,
+
+                address.city,
+
+                address.state,
+
+                address.pincode
+
+            ]
+                .filter(Boolean)
+                .join(", ");
+
+
+            container.innerHTML = `
+
+                <div class="ced-address-box">
+
+                    <strong>
+
+                        ${address.addressType || "Home"}
+
+                    </strong>
+
+                    <br>
+
+                    ${completeAddress}
+
+                    ${
+                        address.landmark
+                            ?
+                            `<br>Landmark: ${address.landmark}`
+                            :
+                            ""
+                    }
+
+                </div>
+
+
+                <div class="ced-address-actions">
+
+                    <button
+                        class="ced-primary-btn"
+                        type="button"
+                        onclick="cedEditAddress()"
+                    >
+
+                        Edit Address
+
+                    </button>
+
+
+                    <button
+                        class="ced-secondary-btn"
+                        type="button"
+                        onclick="cedDeleteAddress()"
+                    >
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            document.getElementById(
+                "cedHouseNumber"
+            ).value =
+                address.houseNumber || "";
+
+
+            document.getElementById(
+                "cedStreet"
+            ).value =
+                address.street || "";
+
+
+            document.getElementById(
+                "cedArea"
+            ).value =
+                address.area || "";
+
+
+            document.getElementById(
+                "cedCity"
+            ).value =
+                address.city || "";
+
+
+            document.getElementById(
+                "cedState"
+            ).value =
+                address.state || "";
+
+
+            document.getElementById(
+                "cedPincode"
+            ).value =
+                address.pincode || "";
+
+
+            document.getElementById(
+                "cedLandmark"
+            ).value =
+                address.landmark || "";
+
+
+            document.getElementById(
+                "cedAddressType"
+            ).value =
+                address.addressType || "Home";
+
+        }
+
+
+        // ==================================================
+        // EDIT ADDRESS
+        // ==================================================
+
+        function cedEditAddress() {
+
+            const form =
+                document.getElementById(
+                    "cedAddressForm"
+                );
+
+
+            form.classList.add(
+                "ced-show"
+            );
+
+
+            form.dataset.mode =
+                "update";
+
+        }
+
+
+        // ==================================================
+        // DELETE ADDRESS
+        // ==================================================
+
+        async function cedDeleteAddress() {
+
+            const confirmed =
+                confirm(
+                    "Are you sure you want to delete your delivery address?"
+                );
+
+
+            if (!confirmed) {
+
+                return;
+
+            }
+
+
+            const token =
+                localStorage.getItem(
+                    "cexAuthToken"
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${cedApiUrl}/addresses/delete`,
+                        {
+
+                            method: "DELETE",
+
+                            headers: {
+
+                                "Authorization":
+                                    `Bearer ${token}`
+
+                            }
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to delete address."
+                    );
+
+                }
+
+
+                cedShowMessage(
+                    "Delivery address deleted."
+                );
+
+
+                document
+                    .getElementById(
+                        "cedAddressForm"
+                    )
+                    .classList.remove(
+                        "ced-show"
+                    );
+
+
+                await cedLoadAddress();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Delete address error:",
+                    error
+                );
+
+
+                cedShowMessage(
+                    error.message
+                );
+
+            }
+
+        }
+
+
+        // ==================================================
+        // SAVE / UPDATE ADDRESS
+        // ==================================================
+
+        document
+            .getElementById(
+                "cedAddressForm"
+            )
+            .addEventListener(
+                "submit",
+                async function (event) {
+
+                    event.preventDefault();
+
+
+                    const token =
+                        localStorage.getItem(
+                            "cexAuthToken"
+                        );
+
+
+                    if (!token) {
+
+                        window.location.href =
+                            "index.html";
+
+                        return;
+
+                    }
+
+
+                    const houseNumber =
+                        document.getElementById(
+                            "cedHouseNumber"
+                        ).value.trim();
+
+
+                    const street =
+                        document.getElementById(
+                            "cedStreet"
+                        ).value.trim();
+
+
+                    const area =
+                        document.getElementById(
+                            "cedArea"
+                        ).value.trim();
+
+
+                    const city =
+                        document.getElementById(
+                            "cedCity"
+                        ).value.trim();
+
+
+                    const state =
+                        document.getElementById(
+                            "cedState"
+                        ).value.trim();
+
+
+                    const pincode =
+                        document.getElementById(
+                            "cedPincode"
+                        ).value.trim();
+
+
+                    const landmark =
+                        document.getElementById(
+                            "cedLandmark"
+                        ).value.trim();
+
+
+                    const addressType =
+                        document.getElementById(
+                            "cedAddressType"
+                        ).value;
+
+
+                    if (
+                        !houseNumber ||
+                        !street ||
+                        !area ||
+                        !city ||
+                        !state ||
+                        !pincode
+                    ) {
+
+                        cedShowMessage(
+                            "Please complete all required fields."
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        !/^[0-9]{6}$/.test(
+                            pincode
+                        )
+                    ) {
+
+                        cedShowMessage(
+                            "Please enter a valid 6-digit pincode."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const form =
+                        document.getElementById(
+                            "cedAddressForm"
+                        );
+
+
+                    const saveButton =
+                        document.getElementById(
+                            "cedSaveAddressButton"
+                        );
+
+
+                    const mode =
+                        form.dataset.mode ||
+                        "create";
+
+
+                    const requestBody = {
+
+                        houseNumber:
+                            houseNumber,
+
+                        street:
+                            street,
+
+                        area:
+                            area,
+
+                        city:
+                            city,
+
+                        state:
+                            state,
+
+                        pincode:
+                            pincode,
+
+                        landmark:
+                            landmark,
+
+                        addressType:
+                            addressType
+
+                    };
+
+
+                    try {
+
+                        saveButton.disabled =
+                            true;
+
+
+                        saveButton.textContent =
+                            mode === "update"
+                                ?
+                                "Updating..."
+                                :
+                                "Saving...";
+
+
+                        const endpoint =
+                            mode === "update"
+                                ?
+                                `${cedApiUrl}/addresses/update`
+                                :
+                                `${cedApiUrl}/addresses/create`;
+
+
+                        const method =
+                            mode === "update"
+                                ?
+                                "PUT"
+                                :
+                                "POST";
+
+
+                        const response =
+                            await fetch(
+                                endpoint,
+                                {
+
+                                    method:
+                                        method,
+
+                                    headers: {
+
+                                        "Content-Type":
+                                            "application/json",
+
+                                        "Authorization":
+                                            `Bearer ${token}`
+
+                                    },
+
+                                    body:
+                                        JSON.stringify(
+                                            requestBody
+                                        )
+
+                                }
+                            );
+
+
+                        const data =
+                            await response.json();
+
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                data.message ||
+                                "Unable to save address."
+                            );
+
+                        }
+
+
+                        cedShowMessage(
+                            mode === "update"
+                                ?
+                                "Address updated successfully!"
+                                :
+                                "Delivery address saved successfully!"
+                        );
+
+
+                        form.classList.remove(
+                            "ced-show"
+                        );
+
+
+                        form.dataset.mode =
+                            "";
+
+
+                        await cedLoadAddress();
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            "Address save error:",
+                            error
+                        );
+
+
+                        cedShowMessage(
+                            error.message ||
+                            "Unable to save address."
+                        );
+
+                    }
+
+                    finally {
+
+                        saveButton.disabled =
+                            false;
+
+
+                        saveButton.textContent =
+                            "Save Address";
+
+                    }
+
+                }
+            );
+
+
+        // ==================================================
+        // LOGOUT
+        // ==================================================
+
+        function cedLogoutCustomer() {
+
+            localStorage.removeItem(
+                "cexAuthToken"
+            );
+
+
+            localStorage.removeItem(
+                "cexCustomer"
+            );
+
+
+            localStorage.removeItem(
+                "cexSubscription"
+            );
+
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+        // ==================================================
+        // START DASHBOARD
+        // ==================================================
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            async function () {
+
+                const token =
+                    localStorage.getItem(
+                        "cexAuthToken"
+                    );
+
+
+                if (!token) {
+
+                    window.location.href =
+                        "index.html";
+
+                    return;
+
+                }
+
+
+                cedLoadCustomer();
+
+                // Load each dashboard section independently.
+                // Do not wait for one API call before showing the dashboard.
+                cedLoadSubscription();
+                cedLoadMealPreferences();
+                cedLoadAddress();
+                cedLoadMeals();
+
+                // Hide the full-page loading screen immediately.
+
+                const loading =
+                    document.getElementById(
+                        "cedLoading"
+                    );
+
+
+                if (loading) {
+
+                    loading.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

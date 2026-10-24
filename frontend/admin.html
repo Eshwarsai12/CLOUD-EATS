@@ -1,0 +1,1991 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Cloud Eats - Admin</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+
+        /* ==========================================
+           HEADER
+        ========================================== */
+
+        .admin-header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .admin-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+
+        .admin-logo span {
+            color: #16a34a;
+        }
+
+
+        .admin-title {
+            font-size: 15px;
+            color: #6b7280;
+        }
+
+
+        /* ==========================================
+           MAIN
+        ========================================== */
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+
+        .page-heading h1 {
+            margin: 0 0 8px;
+            font-size: 30px;
+        }
+
+
+        .page-heading p {
+            margin: 0;
+            color: #6b7280;
+        }
+
+
+        /* ==========================================
+           MESSAGE
+        ========================================== */
+
+        .admin-message {
+            display: none;
+
+            padding: 14px 18px;
+            margin-bottom: 20px;
+
+            background: #dcfce7;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+
+            color: #166534;
+        }
+
+
+        .admin-message.show {
+            display: block;
+        }
+
+
+        .admin-error {
+            background: #fee2e2;
+            border-color: #fca5a5;
+            color: #991b1b;
+        }
+
+
+        /* ==========================================
+           ADD MEAL CARD
+        ========================================== */
+
+        .admin-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+
+            padding: 25px;
+            margin-bottom: 30px;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+
+        .admin-card h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+
+        .meal-form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 18px;
+        }
+
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+
+        .form-group label {
+            font-size: 14px;
+            font-weight: 600;
+
+            margin-bottom: 7px;
+        }
+
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+
+            width: 100%;
+
+            padding: 11px 12px;
+
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+
+        .form-group textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+
+            border-color: #16a34a;
+
+        }
+
+
+        .form-help {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+
+        /* ==========================================
+           BUTTONS
+        ========================================== */
+
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+
+        button {
+            border: none;
+            cursor: pointer;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 11px 17px;
+        }
+
+
+        .primary-btn {
+            background: #16a34a;
+            color: white;
+        }
+
+
+        .primary-btn:hover {
+            background: #15803d;
+        }
+
+
+        .secondary-btn {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+
+        .secondary-btn:hover {
+            background: #d1d5db;
+        }
+
+
+        .edit-btn {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+
+        .toggle-btn {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+
+        /* ==========================================
+           MEAL LIST
+        ========================================== */
+
+        .meal-list-header {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+
+        .meal-list-header h2 {
+            margin: 0;
+        }
+
+
+        .refresh-btn {
+            background: #111827;
+            color: white;
+        }
+
+
+        .meal-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 20px;
+        }
+
+
+        /* ==========================================
+           MEAL CARD
+        ========================================== */
+
+        .meal-item {
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 12px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+
+        .meal-image {
+
+            width: 100%;
+            height: 190px;
+
+            object-fit: cover;
+
+            background: #f3f4f6;
+
+            display: block;
+        }
+
+
+        .meal-image-placeholder {
+
+            height: 190px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #f3f4f6;
+
+            color: #9ca3af;
+
+            font-size: 14px;
+        }
+
+
+        .meal-content {
+            padding: 18px;
+        }
+
+
+        .meal-name {
+
+            font-size: 19px;
+            font-weight: 700;
+
+            margin-bottom: 8px;
+        }
+
+
+        .meal-description {
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            min-height: 40px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .meal-tags {
+
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .meal-tag {
+
+            background: #f3f4f6;
+
+            border-radius: 20px;
+
+            padding: 5px 9px;
+
+            font-size: 12px;
+
+            color: #374151;
+        }
+
+
+        .meal-price {
+
+            font-size: 18px;
+            font-weight: 700;
+
+            margin-bottom: 8px;
+        }
+
+
+        .meal-date {
+
+            font-size: 13px;
+            color: #6b7280;
+
+            margin-bottom: 8px;
+        }
+
+
+        .meal-status {
+
+            display: inline-block;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            margin-bottom: 15px;
+        }
+
+
+        .available {
+
+            background: #dcfce7;
+            color: #166534;
+        }
+
+
+        .unavailable {
+
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+
+        .meal-buttons {
+
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+
+        .meal-buttons button {
+
+            padding: 8px 11px;
+            font-size: 12px;
+
+        }
+
+
+        /* ==========================================
+           EMPTY STATE
+        ========================================== */
+
+        .empty-state {
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 12px;
+
+            padding: 50px 20px;
+
+            text-align: center;
+
+            color: #6b7280;
+
+            grid-column: 1 / -1;
+        }
+
+
+        /* ==========================================
+           LOADING
+        ========================================== */
+
+        .loading {
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #6b7280;
+
+            grid-column: 1 / -1;
+        }
+
+
+        /* ==========================================
+           RESPONSIVE
+        ========================================== */
+
+        @media (max-width: 900px) {
+
+            .meal-grid {
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .meal-form-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .meal-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .admin-header {
+
+                padding: 15px;
+
+            }
+
+
+            .admin-container {
+
+                padding: 0 12px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         HEADER
+    ========================================== -->
+
+    <header class="admin-header">
+
+        <div class="admin-logo">
+
+            Cloud <span>Eats</span>
+
+        </div>
+
+
+        <div class="admin-title">
+
+            Admin Meal Management
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ==========================================
+         MAIN
+    ========================================== -->
+
+    <main class="admin-container">
+
+
+        <div class="page-heading">
+
+            <h1>Meal Management</h1>
+
+            <p>
+                Add, edit, manage and control your Cloud Eats meals.
+            </p>
+
+        </div>
+
+
+        <!-- ==========================================
+             MESSAGE
+        ========================================== -->
+
+        <div
+            id="adminMessage"
+            class="admin-message"
+        ></div>
+
+
+
+        <!-- ==========================================
+             ADD / EDIT MEAL
+        ========================================== -->
+
+        <section class="admin-card">
+
+            <h2 id="formTitle">
+                Add New Meal
+            </h2>
+
+
+            <form id="mealForm">
+
+
+                <div class="meal-form-grid">
+
+
+                    <!-- NAME -->
+
+                    <div class="form-group">
+
+                        <label for="mealName">
+                            Meal Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="mealName"
+                            placeholder="Example: Paneer Rice Bowl"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- PRICE -->
+
+                    <div class="form-group">
+
+                        <label for="mealPrice">
+                            Price
+                        </label>
+
+                        <input
+                            type="number"
+                            id="mealPrice"
+                            placeholder="159"
+                            min="0"
+                            step="0.01"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- MEAL TYPE -->
+
+                    <div class="form-group">
+
+                        <label for="mealType">
+                            Meal Type
+                        </label>
+
+                        <select
+                            id="mealType"
+                            required
+                        >
+
+                            <option value="">
+                                Select meal type
+                            </option>
+
+                            <option value="Breakfast">
+                                Breakfast
+                            </option>
+
+                            <option value="Lunch">
+                                Lunch
+                            </option>
+
+                            <option value="Dinner">
+                                Dinner
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- FOOD TYPE -->
+
+                    <div class="form-group">
+
+                        <label for="foodType">
+                            Food Type
+                        </label>
+
+                        <select
+                            id="foodType"
+                            required
+                        >
+
+                            <option value="">
+                                Select food type
+                            </option>
+
+                            <option value="Vegetarian">
+                                Vegetarian
+                            </option>
+
+                            <option value="Non-Vegetarian">
+                                Non-Vegetarian
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- DATE -->
+
+                    <div class="form-group">
+
+                        <label for="mealDate">
+                            Meal Date
+                        </label>
+
+                        <input
+                            type="date"
+                            id="mealDate"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- IMAGE -->
+
+                    <div class="form-group">
+
+                        <label for="mealImage">
+                            Meal Image
+                        </label>
+
+                        <input
+                            type="file"
+                            id="mealImage"
+                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                        >
+
+                        <div class="form-help">
+                            JPG, JPEG, PNG or WEBP. Maximum 5 MB.
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="form-group full">
+
+                        <label for="mealDescription">
+                            Description
+                        </label>
+
+                        <textarea
+                            id="mealDescription"
+                            placeholder="Describe the meal..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- FORM BUTTONS -->
+
+                <div class="admin-actions">
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                        id="saveMealButton"
+                    >
+                        Add Meal
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="secondary-btn"
+                        id="cancelEditButton"
+                        style="display:none;"
+                        onclick="cancelEdit()"
+                    >
+                        Cancel Edit
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+
+
+        <!-- ==========================================
+             MEAL LIST
+        ========================================== -->
+
+        <section>
+
+
+            <div class="meal-list-header">
+
+                <h2>
+                    All Meals
+                </h2>
+
+
+                <button
+                    class="refresh-btn"
+                    type="button"
+                    onclick="loadMeals()"
+                >
+                    Refresh
+                </button>
+
+            </div>
+
+
+
+            <div
+                id="mealGrid"
+                class="meal-grid"
+            >
+
+                <div class="loading">
+
+                    Loading meals...
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+    ========================================== -->
+
+    <script>
+
+
+        // =====================================================
+        // API
+        // =====================================================
+
+        const API_URL =
+            "http://localhost:5000/api";
+
+
+        const IMAGE_BASE_URL =
+            "http://localhost:5000";
+
+
+        // =====================================================
+        // EDITING STATE
+        // =====================================================
+
+        let editingMealId = null;
+
+
+        // =====================================================
+        // MESSAGE
+        // =====================================================
+
+        function showMessage(
+            message,
+            isError = false
+        ) {
+
+            const box =
+                document.getElementById(
+                    "adminMessage"
+                );
+
+
+            box.textContent =
+                message;
+
+
+            box.classList.add(
+                "show"
+            );
+
+
+            if (isError) {
+
+                box.classList.add(
+                    "admin-error"
+                );
+
+            } else {
+
+                box.classList.remove(
+                    "admin-error"
+                );
+
+            }
+
+
+            clearTimeout(
+                window.adminMessageTimer
+            );
+
+
+            window.adminMessageTimer =
+                setTimeout(
+                    function () {
+
+                        box.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    3500
+                );
+
+        }
+
+
+        // =====================================================
+        // ESCAPE HTML
+        // =====================================================
+
+        function escapeHtml(
+            value
+        ) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+
+                return "";
+
+            }
+
+
+            return String(value)
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        // =====================================================
+        // LOAD ALL MEALS
+        // =====================================================
+
+        async function loadMeals() {
+
+            const grid =
+                document.getElementById(
+                    "mealGrid"
+                );
+
+
+            grid.innerHTML = `
+                <div class="loading">
+                    Loading meals...
+                </div>
+            `;
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_URL}/meals/all`
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load meals."
+                    );
+
+                }
+
+
+                displayMeals(
+                    data.meals || []
+                );
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Load meals error:",
+                    error
+                );
+
+
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        Unable to load meals.
+                        <br><br>
+                        Make sure the Cloud Eats backend is running.
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        // =====================================================
+        // DISPLAY MEALS
+        // =====================================================
+
+        function displayMeals(
+            meals
+        ) {
+
+            const grid =
+                document.getElementById(
+                    "mealGrid"
+                );
+
+
+            if (
+                !meals ||
+                meals.length === 0
+            ) {
+
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        No meals found.
+                        <br><br>
+                        Add your first Cloud Eats meal above.
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            grid.innerHTML =
+                meals
+                    .map(
+                        function (meal) {
+
+                            return createMealCard(
+                                meal
+                            );
+
+                        }
+                    )
+                    .join("");
+
+        }
+
+
+        // =====================================================
+        // CREATE MEAL CARD
+        // =====================================================
+
+        function createMealCard(
+            meal
+        ) {
+
+            const image =
+                meal.image
+                    ? `
+                        <img
+                            class="meal-image"
+                            src="${IMAGE_BASE_URL}${escapeHtml(meal.image)}"
+                            alt="${escapeHtml(meal.name)}"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        >
+
+                        <div
+                            class="meal-image-placeholder"
+                            style="display:none;"
+                        >
+                            Image unavailable
+                        </div>
+                    `
+                    : `
+                        <div class="meal-image-placeholder">
+                            No image
+                        </div>
+                    `;
+
+
+            const statusClass =
+                meal.available
+                    ? "available"
+                    : "unavailable";
+
+
+            const statusText =
+                meal.available
+                    ? "Available"
+                    : "Unavailable";
+
+
+            const dateText =
+                meal.date
+                    ? new Date(
+                        meal.date
+                    ).toLocaleDateString(
+                        "en-IN",
+                        {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric"
+                        }
+                    )
+                    : "No date";
+
+
+            return `
+
+                <article class="meal-item">
+
+                    ${image}
+
+
+                    <div class="meal-content">
+
+
+                        <div class="meal-name">
+                            ${escapeHtml(meal.name)}
+                        </div>
+
+
+                        <div class="meal-description">
+                            ${escapeHtml(meal.description)}
+                        </div>
+
+
+                        <div class="meal-tags">
+
+                            <span class="meal-tag">
+                                ${escapeHtml(meal.mealType)}
+                            </span>
+
+                            <span class="meal-tag">
+                                ${escapeHtml(meal.foodType)}
+                            </span>
+
+                        </div>
+
+
+                        <div class="meal-price">
+                            ₹${Number(
+                                meal.price
+                            ).toLocaleString(
+                                "en-IN"
+                            )}
+                        </div>
+
+
+                        <div class="meal-date">
+                            Date: ${dateText}
+                        </div>
+
+
+                        <span
+                            class="meal-status ${statusClass}"
+                        >
+                            ${statusText}
+                        </span>
+
+
+                        <div class="meal-buttons">
+
+                            <button
+                                type="button"
+                                class="edit-btn"
+                                onclick="editMeal('${meal._id}')"
+                            >
+                                Edit
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="toggle-btn"
+                                onclick="toggleMeal('${meal._id}')"
+                            >
+                                ${
+                                    meal.available
+                                        ? "Disable"
+                                        : "Enable"
+                                }
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="delete-btn"
+                                onclick="deleteMeal('${meal._id}')"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }
+
+
+        // =====================================================
+        // ADD / UPDATE MEAL
+        // =====================================================
+
+        document
+            .getElementById(
+                "mealForm"
+            )
+            .addEventListener(
+                "submit",
+                async function (event) {
+
+                    event.preventDefault();
+
+
+                    const name =
+                        document
+                            .getElementById(
+                                "mealName"
+                            )
+                            .value
+                            .trim();
+
+
+                    const description =
+                        document
+                            .getElementById(
+                                "mealDescription"
+                            )
+                            .value
+                            .trim();
+
+
+                    const mealType =
+                        document
+                            .getElementById(
+                                "mealType"
+                            )
+                            .value;
+
+
+                    const foodType =
+                        document
+                            .getElementById(
+                                "foodType"
+                            )
+                            .value;
+
+
+                    const price =
+                        document
+                            .getElementById(
+                                "mealPrice"
+                            )
+                            .value;
+
+
+                    const date =
+                        document
+                            .getElementById(
+                                "mealDate"
+                            )
+                            .value;
+
+
+                    const imageInput =
+                        document
+                            .getElementById(
+                                "mealImage"
+                            );
+
+
+                    const image =
+                        imageInput.files[0];
+
+
+                    if (!name) {
+
+                        showMessage(
+                            "Please enter meal name.",
+                            true
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (!description) {
+
+                        showMessage(
+                            "Please enter meal description.",
+                            true
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (!mealType) {
+
+                        showMessage(
+                            "Please select meal type.",
+                            true
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (!foodType) {
+
+                        showMessage(
+                            "Please select food type.",
+                            true
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        price === "" ||
+                        Number(price) < 0
+                    ) {
+
+                        showMessage(
+                            "Please enter a valid price.",
+                            true
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (!date) {
+
+                        showMessage(
+                            "Please select meal date.",
+                            true
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        image &&
+                        image.size >
+                        5 * 1024 * 1024
+                    ) {
+
+                        showMessage(
+                            "Image must be smaller than 5 MB.",
+                            true
+                        );
+
+                        return;
+
+                    }
+
+
+                    const button =
+                        document.getElementById(
+                            "saveMealButton"
+                        );
+
+
+                    button.disabled =
+                        true;
+
+
+                    button.textContent =
+                        editingMealId
+                            ? "Updating..."
+                            : "Adding...";
+
+
+                    try {
+
+                        const formData =
+                            new FormData();
+
+
+                        formData.append(
+                            "name",
+                            name
+                        );
+
+
+                        formData.append(
+                            "description",
+                            description
+                        );
+
+
+                        formData.append(
+                            "mealType",
+                            mealType
+                        );
+
+
+                        formData.append(
+                            "foodType",
+                            foodType
+                        );
+
+
+                        formData.append(
+                            "price",
+                            price
+                        );
+
+
+                        formData.append(
+                            "available",
+                            "true"
+                        );
+
+
+                        formData.append(
+                            "date",
+                            date
+                        );
+
+
+                        if (image) {
+
+                            formData.append(
+                                "image",
+                                image
+                            );
+
+                        }
+
+
+                        const endpoint =
+                            editingMealId
+                                ? `${API_URL}/meals/update/${editingMealId}`
+                                : `${API_URL}/meals/create`;
+
+
+                        const method =
+                            editingMealId
+                                ? "PUT"
+                                : "POST";
+
+
+                        const response =
+                            await fetch(
+                                endpoint,
+                                {
+                                    method,
+                                    body: formData
+                                }
+                            );
+
+
+                        const data =
+                            await response.json();
+
+
+                        if (!response.ok) {
+
+                            throw new Error(
+                                data.message ||
+                                "Unable to save meal."
+                            );
+
+                        }
+
+
+                        showMessage(
+                            editingMealId
+                                ? "Meal updated successfully!"
+                                : "Meal added successfully!"
+                        );
+
+
+                        resetMealForm();
+
+
+                        await loadMeals();
+
+                    }
+                    catch (error) {
+
+                        console.error(
+                            "Save meal error:",
+                            error
+                        );
+
+
+                        showMessage(
+                            error.message ||
+                            "Unable to save meal.",
+                            true
+                        );
+
+                    }
+                    finally {
+
+                        button.disabled =
+                            false;
+
+                        button.textContent =
+                            editingMealId
+                                ? "Update Meal"
+                                : "Add Meal";
+
+                    }
+
+                }
+            );
+
+
+        // =====================================================
+        // EDIT MEAL
+        // =====================================================
+
+        async function editMeal(
+            mealId
+        ) {
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_URL}/meals/${mealId}`
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to load meal."
+                    );
+
+                }
+
+
+                const meal =
+                    data.meal;
+
+
+                editingMealId =
+                    meal._id;
+
+
+                document
+                    .getElementById(
+                        "mealName"
+                    )
+                    .value =
+                    meal.name || "";
+
+
+                document
+                    .getElementById(
+                        "mealDescription"
+                    )
+                    .value =
+                    meal.description || "";
+
+
+                document
+                    .getElementById(
+                        "mealType"
+                    )
+                    .value =
+                    meal.mealType || "";
+
+
+                document
+                    .getElementById(
+                        "foodType"
+                    )
+                    .value =
+                    meal.foodType || "";
+
+
+                document
+                    .getElementById(
+                        "mealPrice"
+                    )
+                    .value =
+                    meal.price ?? "";
+
+
+                if (meal.date) {
+
+                    const date =
+                        new Date(
+                            meal.date
+                        );
+
+
+                    const year =
+                        date.getUTCFullYear();
+
+
+                    const month =
+                        String(
+                            date.getUTCMonth() + 1
+                        )
+                        .padStart(
+                            2,
+                            "0"
+                        );
+
+
+                    const day =
+                        String(
+                            date.getUTCDate()
+                        )
+                        .padStart(
+                            2,
+                            "0"
+                        );
+
+
+                    document
+                        .getElementById(
+                            "mealDate"
+                        )
+                        .value =
+                        `${year}-${month}-${day}`;
+
+                }
+
+
+                document
+                    .getElementById(
+                        "formTitle"
+                    )
+                    .textContent =
+                    "Edit Meal";
+
+
+                document
+                    .getElementById(
+                        "saveMealButton"
+                    )
+                    .textContent =
+                    "Update Meal";
+
+
+                document
+                    .getElementById(
+                        "cancelEditButton"
+                    )
+                    .style.display =
+                    "inline-block";
+
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Edit meal error:",
+                    error
+                );
+
+
+                showMessage(
+                    error.message ||
+                    "Unable to edit meal.",
+                    true
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // CANCEL EDIT
+        // =====================================================
+
+        function cancelEdit() {
+
+            resetMealForm();
+
+        }
+
+
+        // =====================================================
+        // RESET FORM
+        // =====================================================
+
+        function resetMealForm() {
+
+            editingMealId =
+                null;
+
+
+            document
+                .getElementById(
+                    "mealForm"
+                )
+                .reset();
+
+
+            document
+                .getElementById(
+                    "formTitle"
+                )
+                .textContent =
+                "Add New Meal";
+
+
+            document
+                .getElementById(
+                    "saveMealButton"
+                )
+                .textContent =
+                "Add Meal";
+
+
+            document
+                .getElementById(
+                    "cancelEditButton"
+                )
+                .style.display =
+                "none";
+
+        }
+
+
+        // =====================================================
+        // TOGGLE MEAL
+        // =====================================================
+
+        async function toggleMeal(
+            mealId
+        ) {
+
+            const confirmed =
+                confirm(
+                    "Do you want to change this meal's availability?"
+                );
+
+
+            if (!confirmed) {
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_URL}/meals/toggle/${mealId}`,
+                        {
+                            method: "PUT"
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to change meal availability."
+                    );
+
+                }
+
+
+                showMessage(
+                    data.message ||
+                    "Meal availability changed."
+                );
+
+
+                await loadMeals();
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Toggle meal error:",
+                    error
+                );
+
+
+                showMessage(
+                    error.message ||
+                    "Unable to change meal availability.",
+                    true
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // DELETE MEAL
+        // =====================================================
+
+        async function deleteMeal(
+            mealId
+        ) {
+
+            const confirmed =
+                confirm(
+                    "Are you sure you want to delete this meal? This cannot be undone."
+                );
+
+
+            if (!confirmed) {
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_URL}/meals/delete/${mealId}`,
+                        {
+                            method: "DELETE"
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to delete meal."
+                    );
+
+                }
+
+
+                showMessage(
+                    "Meal deleted successfully!"
+                );
+
+
+                await loadMeals();
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Delete meal error:",
+                    error
+                );
+
+
+                showMessage(
+                    error.message ||
+                    "Unable to delete meal.",
+                    true
+                );
+
+            }
+
+        }
+
+
+        // =====================================================
+        // START
+        // =====================================================
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                loadMeals();
+
+            }
+        );
+
+
+    </script>
+
+</body>
+
+</html>
